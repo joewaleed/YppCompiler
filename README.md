@@ -54,7 +54,7 @@ YppCompiler/
 
 Before building or running the compiler, ensure you have the following installed:
 
-- [.NET SDK](https://dotnet.microsoft.com/download) (version 8.0 or later recommended)
+- [.NET SDK](https://dotnet.microsoft.com/download) (version 10.0 or later recommended)
 - [Visual Studio 2022+](https://visualstudio.microsoft.com/) **or** any IDE with C# support (e.g., VS Code with the C# extension)
 
 ---
