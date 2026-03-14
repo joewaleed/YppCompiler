@@ -1,0 +1,224 @@
+﻿<Window x:Class="Ypp_Compiler.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:Ypp_Compiler"
+        mc:Ignorable="d"
+        Title="MainWindow"
+        SizeToContent="WidthAndHeight"
+        Height="Auto" Width="Auto"
+        MinHeight="600" MinWidth="800"
+        WindowStartupLocation="CenterScreen"
+        WindowStyle="None"
+        AllowsTransparency="True"
+        Background="Transparent"
+        >
+
+    <Window.Resources>
+        <Style x:Key="Main_MenuItem" TargetType="MenuItem">
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="{x:Type MenuItem}">
+                        <Border x:Name="border" BorderThickness="0" Padding="5,0,5,0">
+                            <ContentPresenter ContentSource="Header" 
+                                              TextBlock.Foreground="{DynamicResource TextColor}" 
+                                              TextBlock.FontFamily="Rubik Medium" TextBlock.FontSize="15"
+                                              HorizontalAlignment="Left" VerticalAlignment="Center"
+                                              Margin="0,3,0,3"/>
+                        </Border>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsHighlighted" Value="True">
+                                <Setter TargetName="border" Property="Background" Value="{DynamicResource HighlightColor}"/>
+                                <Setter TargetName="border" Property="BorderBrush" Value="{DynamicResource HighlightColor}"/>
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                    
+                </Setter.Value>
+            </Setter>
+        </Style>
+
+        <Style x:Key="Services_MenuItem_With_Dropdown"
+               TargetType="MenuItem">
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="{x:Type MenuItem}">
+                        <Border x:Name="border"
+                                Background="Transparent"
+                                BorderThickness="0"
+                                Height="30"
+                                Width="auto"
+                                Padding="5,0,5,0">
+                            <Grid>
+                                <ContentPresenter ContentSource="Header"
+                                                  TextBlock.Foreground="{DynamicResource TextColor}"
+                                                  TextBlock.FontFamily="Rubik Medium"
+                                                  TextBlock.FontSize="15"
+                                                  HorizontalAlignment="Left"
+                                                  VerticalAlignment="Center" />
+
+                                <Popup x:Name="PART_Popup"
+                                       AllowsTransparency="True"
+                                       IsOpen="{Binding IsSubmenuOpen, RelativeSource={RelativeSource TemplatedParent}}"
+                                       Placement="Bottom"
+                                       PopupAnimation="{DynamicResource {x:Static SystemParameters.MenuPopupAnimationKey}}">
+
+                                    <Border x:Name="SubMenuBorder"
+                                            Background="{DynamicResource DropDownColor}"
+                                            BorderBrush="{DynamicResource BorderColor}">
+
+                                        <ScrollViewer x:Name="SubMenuScrollViewer"
+                                                      Style="{DynamicResource {ComponentResourceKey ResourceId=MenuScrollViewer,TypeInTargetAssembly={x:Type FrameworkElement}}}">
+
+                                            <Grid RenderOptions.ClearTypeHint="Enabled">
+
+                                                <Canvas HorizontalAlignment="Left"
+                                                        VerticalAlignment="Top" />
+
+                                                <ItemsPresenter x:Name="ItemsPresenter" />
+
+                                            </Grid>
+                                        </ScrollViewer>
+                                    </Border>
+                                </Popup>
+                            </Grid>
+                        </Border>
+
+                        <ControlTemplate.Triggers>
+
+                            <Trigger Property="IsSuspendingPopupAnimation"
+                                     Value="True">
+                                <Setter Property="PopupAnimation"
+                                        TargetName="PART_Popup"
+                                        Value="None" />
+                            </Trigger>
+                            <Trigger Property="IsHighlighted"
+                                     Value="True">
+                                <Setter Property="Background"
+                                        TargetName="border"
+                                        Value="{DynamicResource HighlightColor}" />
+                                <Setter Property="BorderBrush"
+                                        TargetName="border"
+                                        Value="{DynamicResource HighlightColor}" />
+                            </Trigger>
+
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+
+        <Style x:Key="Service_SubMenu_MenuItem" TargetType="MenuItem">
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="{x:Type MenuItem}">
+                        <Border x:Name="border" BorderThickness="0" Padding="0,3,5,3">
+                            <Grid>
+                                <ContentPresenter ContentSource="Header" 
+                                  TextBlock.Foreground="{DynamicResource TextColor}" 
+                                  TextBlock.FontFamily="Rubik Medium" TextBlock.FontSize="15"
+                                  HorizontalAlignment="Left" VerticalAlignment="Center"
+                                  Margin="3,0,3,0"/>
+                                <Grid x:Name="Highlighter" Height="35" Width="2" Background="{DynamicResource TextColor}" 
+                                  HorizontalAlignment="Left"
+                                  VerticalAlignment="Center"
+                                  Visibility="Collapsed">
+                                </Grid>
+                            </Grid>
+
+                        </Border>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsHighlighted" Value="True">
+                                <Setter TargetName="border" Property="Background" Value="{DynamicResource HighlightColor}"/>
+                                <Setter TargetName="border" Property="BorderBrush" Value="{DynamicResource HighlightColor}"/>
+                                <Setter TargetName="Highlighter" Property="Visibility" Value="Visible"/>
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+
+                </Setter.Value>
+            </Setter>
+        </Style>
+
+        <Style x:Key="TextEditor" TargetType="TextBox">
+            <Setter Property="Padding" Value="10"/>
+
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="TextBox">
+                        <Border x:Name="border" 
+                        CornerRadius="20" 
+                        Background="{DynamicResource TextEditorColor}"
+                        SnapsToDevicePixels="True">
+
+                            <ScrollViewer x:Name="PART_ContentHost" Focusable="false" 
+                                  HorizontalScrollBarVisibility="Hidden" 
+                                  VerticalScrollBarVisibility="Hidden"/>
+                        </Border>
+
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsFocused" Value="True">
+                                <Setter TargetName="border" Property="BorderBrush" Value="{DynamicResource TextEditorSelectionColor}"/>
+                                <Setter TargetName="border" Property="BorderThickness" Value="3"/>
+                            </Trigger>
+                            <Trigger Property="IsFocused" Value="False">
+                                <Setter TargetName="border" Property="BorderBrush" Value="{DynamicResource TextEditorBorderColor}"/>
+                                <Setter TargetName="border" Property="BorderThickness" Value="2"/>
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+
+    </Window.Resources>
+
+    <Grid>
+        <Border Background= "{DynamicResource BackgroundColor}"  CornerRadius="25" BorderBrush="{DynamicResource BorderColor}" BorderThickness="2" Margin="10">
+            <Border.Effect>
+                <DropShadowEffect Color="{DynamicResource ShadowColor}" BlurRadius="35" ShadowDepth="2" Direction="90" Opacity="0.5"/>
+            </Border.Effect>
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="*"/>
+                </Grid.RowDefinitions>
+                <Menu VerticalAlignment="Top" Margin="20,10,0,0" Background="Transparent" BorderThickness="0" Grid.Row="0">
+                    <MenuItem Header="File" Style="{StaticResource Services_MenuItem_With_Dropdown}">
+                        <MenuItem Style="{StaticResource Service_SubMenu_MenuItem}" Header="New"/>
+                        <MenuItem Style="{StaticResource Service_SubMenu_MenuItem}" Header="Open"/>
+                        <MenuItem Style="{StaticResource Service_SubMenu_MenuItem}" Header="Save"/>
+                        <MenuItem Style="{StaticResource Service_SubMenu_MenuItem}"  Header="Exit"/>
+                    </MenuItem>
+                    <MenuItem Header="Edit" Style="{StaticResource Services_MenuItem_With_Dropdown}">
+                        <MenuItem Style="{StaticResource Service_SubMenu_MenuItem}" Header="Undo"/>
+                        <MenuItem Style="{StaticResource Service_SubMenu_MenuItem}" Header="Redo"/>
+                        <MenuItem Style="{StaticResource Service_SubMenu_MenuItem}" Header="Cut"/>
+                        <MenuItem Style="{StaticResource Service_SubMenu_MenuItem}" Header="Copy"/>
+                        <MenuItem Style="{StaticResource Service_SubMenu_MenuItem}" Header="Paste"/>
+                    </MenuItem>
+                    <MenuItem Header="View" Style="{StaticResource Services_MenuItem_With_Dropdown}">
+                        <MenuItem Header="Theme" Style="{StaticResource Main_MenuItem}">
+                            <MenuItem Style="{StaticResource Service_SubMenu_MenuItem}" Header="DarkTheme"/>
+                            <MenuItem Style="{StaticResource Service_SubMenu_MenuItem}" Header="LightTheme"/>
+                        </MenuItem>
+                    </MenuItem>
+                    <MenuItem Header="Run" Style="{StaticResource Main_MenuItem}" />
+                    <MenuItem Header="Help" Style="{StaticResource Services_MenuItem_With_Dropdown}">
+                        <MenuItem Style="{StaticResource Service_SubMenu_MenuItem}" Header="Documentation"/>
+                        <MenuItem Style="{StaticResource Service_SubMenu_MenuItem}" Header="About"/>
+                    </MenuItem>
+                </Menu>
+                <Grid Grid.Row="1">
+                    <TextBox Margin="10,5,10,25" Padding="10" Style="{StaticResource TextEditor}" SelectionBrush="{DynamicResource TextEditorSelectionColor}"
+                         Background="{DynamicResource TextEditorColor}" Foreground="{DynamicResource TextColor}" 
+                         FontFamily="Rubik Medium"/>
+                </Grid>
+            </Grid>
+            
+            
+        </Border>
+
+    </Grid>
+</Window>
