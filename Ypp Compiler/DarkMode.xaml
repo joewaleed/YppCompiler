@@ -3,7 +3,6 @@
     
     <SolidColorBrush x:Key="BackgroundColor" Color="#1f1f1f"/>
     <SolidColorBrush x:Key="BorderColor" Color="#3C3C3C"/>
-    <SolidColorBrush x:Key="CloseButton" Color="#FFFFFF"/>
     <SolidColorBrush x:Key="TextColor" Color="#FFFFFF"/>
     <SolidColorBrush x:Key="HighlightColor" Color="#292929"/>
     <SolidColorBrush x:Key="DropDownColor" Color="#3a3a3a"/>
@@ -12,6 +11,7 @@
     <SolidColorBrush x:Key="TextEditorSelectionColor" Color="#ffb220"/>
     <SolidColorBrush x:Key="TextHighlightColor" Color="#5eeb01"/>
     <SolidColorBrush x:Key="DataGridHeaderColor" Color="#043169"/>
+    <SolidColorBrush x:Key="CloseButtonColor" Color="#ff4e39"/>
     
 
     <Color x:Key="ShadowColor">#000000</Color>

@@ -34,7 +34,7 @@
                             </Trigger>
                         </ControlTemplate.Triggers>
                     </ControlTemplate>
-                    
+
                 </Setter.Value>
             </Setter>
         </Style>
@@ -180,6 +180,44 @@
             <Setter Property="BorderBrush" Value="{DynamicResource BorderColor}"/>
         </Style>
 
+        <Style x:Key="CloseAppStyle"
+               TargetType="{x:Type Button}">
+
+            <Setter Property="Height"
+                    Value="25" />
+            <Setter Property="Width"
+                    Value="25" />
+            <Setter Property="HorizontalAlignment"
+                    Value="Right" />
+            <Setter Property="VerticalAlignment"
+                    Value="Top" />
+            <Setter Property="Margin"
+                    Value="0,40,40,0" />
+
+            <Setter Property="Template">
+
+                <Setter.Value>
+
+                    <ControlTemplate TargetType="{x:Type Button}">
+
+                        <ControlTemplate.Triggers>
+
+                            <Trigger Property="IsMouseOver"
+                                     Value="True">
+
+                            </Trigger>
+
+                            <Trigger Property="IsPressed"
+                                     Value="True">
+
+                            </Trigger>
+
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+
     </Window.Resources>
 
     <Grid>
@@ -192,32 +230,72 @@
                     <RowDefinition Height="Auto"/>
                     <RowDefinition Height="*"/>
                 </Grid.RowDefinitions>
-                <Menu VerticalAlignment="Top" Margin="20,10,0,0" Background="Transparent" BorderThickness="0" Grid.Row="0">
-                    <MenuItem Header="File" Style="{StaticResource Services_MenuItem_With_Dropdown}">
-                        <MenuItem Style="{StaticResource Service_SubMenu_MenuItem}" Header="New"/>
-                        <MenuItem Style="{StaticResource Service_SubMenu_MenuItem}" Header="Open"/>
-                        <MenuItem Style="{StaticResource Service_SubMenu_MenuItem}" Header="Save"/>
-                        <MenuItem Style="{StaticResource Service_SubMenu_MenuItem}"  Header="Exit"/>
-                    </MenuItem>
-                    <MenuItem Header="Edit" Style="{StaticResource Services_MenuItem_With_Dropdown}">
-                        <MenuItem Style="{StaticResource Service_SubMenu_MenuItem}" Header="Undo"/>
-                        <MenuItem Style="{StaticResource Service_SubMenu_MenuItem}" Header="Redo"/>
-                        <MenuItem Style="{StaticResource Service_SubMenu_MenuItem}" Header="Cut"/>
-                        <MenuItem Style="{StaticResource Service_SubMenu_MenuItem}" Header="Copy"/>
-                        <MenuItem Style="{StaticResource Service_SubMenu_MenuItem}" Header="Paste"/>
-                    </MenuItem>
-                    <MenuItem Header="View" Style="{StaticResource Services_MenuItem_With_Dropdown}">
-                        <MenuItem Header="Theme" Style="{StaticResource Main_MenuItem}">
-                            <MenuItem Style="{StaticResource Service_SubMenu_MenuItem}" Header="DarkTheme"/>
-                            <MenuItem Style="{StaticResource Service_SubMenu_MenuItem}" Header="LightTheme"/>
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="Auto"/>
+                    </Grid.ColumnDefinitions>
+                    <Menu VerticalAlignment="Top" Margin="20,10,0,0" Background="Transparent" BorderThickness="0" Grid.Row="0">
+                        <MenuItem Header="File" Style="{StaticResource Services_MenuItem_With_Dropdown}">
+                            <MenuItem Style="{StaticResource Service_SubMenu_MenuItem}" Header="New"/>
+                            <MenuItem Style="{StaticResource Service_SubMenu_MenuItem}" Header="Open"/>
+                            <MenuItem Style="{StaticResource Service_SubMenu_MenuItem}" Header="Save"/>
+                            <MenuItem Style="{StaticResource Service_SubMenu_MenuItem}"  Header="Exit"/>
                         </MenuItem>
-                    </MenuItem>
-                    <MenuItem Header="Run" Style="{StaticResource Main_MenuItem}" Click="Run_Click"/>
-                    <MenuItem Header="Help" Style="{StaticResource Services_MenuItem_With_Dropdown}">
-                        <MenuItem Style="{StaticResource Service_SubMenu_MenuItem}" Header="Documentation"/>
-                        <MenuItem Style="{StaticResource Service_SubMenu_MenuItem}" Header="About"/>
-                    </MenuItem>
-                </Menu>
+                        <MenuItem Header="Edit" Style="{StaticResource Services_MenuItem_With_Dropdown}">
+                            <MenuItem Style="{StaticResource Service_SubMenu_MenuItem}" Header="Undo"/>
+                            <MenuItem Style="{StaticResource Service_SubMenu_MenuItem}" Header="Redo"/>
+                            <MenuItem Style="{StaticResource Service_SubMenu_MenuItem}" Header="Cut"/>
+                            <MenuItem Style="{StaticResource Service_SubMenu_MenuItem}" Header="Copy"/>
+                            <MenuItem Style="{StaticResource Service_SubMenu_MenuItem}" Header="Paste"/>
+                        </MenuItem>
+                        <MenuItem Header="View" Style="{StaticResource Services_MenuItem_With_Dropdown}">
+                            <MenuItem Header="Theme" Style="{StaticResource Main_MenuItem}">
+                                <MenuItem Style="{StaticResource Service_SubMenu_MenuItem}" Header="DarkTheme"/>
+                                <MenuItem Style="{StaticResource Service_SubMenu_MenuItem}" Header="LightTheme"/>
+                            </MenuItem>
+                        </MenuItem>
+                        <MenuItem Header="Run" Style="{StaticResource Main_MenuItem}" Click="Run_Click"/>
+                        <MenuItem Header="Help" Style="{StaticResource Services_MenuItem_With_Dropdown}">
+                            <MenuItem Style="{StaticResource Service_SubMenu_MenuItem}" Header="Documentation" Click="Documentation_Click"/>
+                            <MenuItem Style="{StaticResource Service_SubMenu_MenuItem}" Header="About"/>
+                        </MenuItem>
+                    </Menu>
+
+                    <Button x:Name="ExitButton" Background="Transparent" Width="25" Height="25" BorderThickness="0"
+                            HorizontalAlignment="Right" VerticalAlignment="Center" Grid.Column="1" Margin="0,0,10,0"
+                            Click="ExitButton_Click">
+                        <Button.Style>
+                            <Style TargetType="Button">
+                                <Setter Property="Template">
+                                    <Setter.Value>
+                                        <ControlTemplate TargetType="Button">
+                                            <Border Background="{TemplateBinding Background}">
+                                                <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                                            </Border>
+                                        </ControlTemplate>
+                                    </Setter.Value>
+                                </Setter>
+                            </Style>
+                        </Button.Style>
+
+                        <Viewbox Width="20" Height="20">
+                            <Path x:Name="ExitPath" 
+                                  Data="M 25 2 C 12.309534 2 2 12.309534 2 25 C 2 37.690466 12.309534 48 25 48 C 37.690466 48 48 37.690466 48 25 C 48 12.309534 37.690466 2 25 2 z M 25 4 C 36.609534 4 46 13.390466 46 25 C 46 36.609534 36.609534 46 25 46 C 13.390466 46 4 36.609534 4 25 C 4 13.390466 13.390466 4 25 4 z M 32.990234 15.986328 A 1.0001 1.0001 0 0 0 32.292969 16.292969 L 25 23.585938 L 17.707031 16.292969 A 1.0001 1.0001 0 0 0 16.990234 15.990234 A 1.0001 1.0001 0 0 0 16.292969 17.707031 L 23.585938 25 L 16.292969 32.292969 A 1.0001 1.0001 0 1 0 17.707031 33.707031 L 25 26.414062 L 32.292969 33.707031 A 1.0001 1.0001 0 1 0 33.707031 32.292969 L 26.414062 25 L 33.707031 17.707031 A 1.0001 1.0001 0 0 0 32.990234 15.986328 z" 
+                                  Fill="{DynamicResource CloseButtonColor}">
+                                <Path.Style>
+                                    <Style TargetType="Path">
+                                        <Style.Triggers>
+                                            <DataTrigger Binding="{Binding IsMouseOver, RelativeSource={RelativeSource AncestorType=Button}}" Value="True">
+                                                <Setter Property="Fill" Value="DarkRed" />
+                                            </DataTrigger>
+                                        </Style.Triggers>
+                                    </Style>
+                                </Path.Style>
+                            </Path>
+                        </Viewbox>
+                    </Button>
+                </Grid>
                 <Grid Grid.Row="1">
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="2*"/>
@@ -240,7 +318,7 @@
                               Background="Transparent" BorderThickness="0" HeadersVisibility="Column"
                               GridLinesVisibility="None" Margin="10,5,10,25"
                               HorizontalAlignment="Stretch" x:Name="Scanner_Output">
-                        <DataGrid.Resources>
+                            <DataGrid.Resources>
 
                                 <Style TargetType="DataGridCell">
                                     <Setter Property="Foreground" Value="{DynamicResource TextColor}"/>
@@ -269,8 +347,8 @@
                     </Grid>
                 </Grid>
             </Grid>
-            
-            
+
+
         </Border>
 
     </Grid>
