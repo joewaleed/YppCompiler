@@ -6,7 +6,7 @@
         xmlns:local="clr-namespace:Ypp_Compiler"
         mc:Ignorable="d"
         Title="MainWindow"
-        SizeToContent="WidthAndHeight"
+        SizeToContent="Manual"
         Height="Auto" Width="Auto"
         MinHeight="600" MinWidth="800"
         WindowStartupLocation="CenterScreen"
@@ -143,7 +143,7 @@
 
         <Style x:Key="TextEditor" TargetType="TextBox">
             <Setter Property="Padding" Value="10"/>
-
+            <Setter Property="Margin" Value="10,5,10,25"/>
             <Setter Property="Template">
                 <Setter.Value>
                     <ControlTemplate TargetType="TextBox">
@@ -152,9 +152,9 @@
                         Background="{DynamicResource TextEditorColor}"
                         SnapsToDevicePixels="True">
 
-                            <ScrollViewer x:Name="PART_ContentHost" Focusable="false" 
-                                  HorizontalScrollBarVisibility="Hidden" 
-                                  VerticalScrollBarVisibility="Hidden"/>
+                            <ScrollViewer x:Name="PART_ContentHost" 
+                              VerticalScrollBarVisibility="Visible" Background="Transparent" 
+                              HorizontalScrollBarVisibility="Disabled"/>
                         </Border>
 
                         <ControlTemplate.Triggers>
@@ -211,9 +211,31 @@
                     </MenuItem>
                 </Menu>
                 <Grid Grid.Row="1">
-                    <TextBox Margin="10,5,10,25" Padding="10" Style="{StaticResource TextEditor}" SelectionBrush="{DynamicResource TextEditorSelectionColor}"
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="2*"/>
+                        <ColumnDefinition Width="1*"/>
+                    </Grid.ColumnDefinitions>
+                    <TextBox Padding="10" Style="{StaticResource TextEditor}" SelectionBrush="{DynamicResource TextHighlightColor}"
                          Background="{DynamicResource TextEditorColor}" Foreground="{DynamicResource TextColor}" 
-                         FontFamily="Rubik Medium"/>
+                         FontFamily="Rubik Medium" Grid.Column="0"
+                             TextWrapping="Wrap" AcceptsReturn="True" AcceptsTab="True" />
+                    <Grid Grid.Column="1">
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="*"/>
+                        </Grid.RowDefinitions>
+                        <MenuItem Header="Lexical Scanner" Style="{StaticResource Main_MenuItem}" Grid.Row="0"/>
+                        <DataGrid Width="300" Margin="10,5,10,25" 
+                          Background="{DynamicResource TextEditorColor}" BorderBrush="{DynamicResource BorderColor}"
+                          Foreground="{DynamicResource TextColor}" Grid.Row="1">
+                            <DataGrid.Resources>
+                                <Style TargetType="{x:Type DataGridColumnHeader}">
+                                    <Setter Property="Background" Value="{DynamicResource DataGridHeaderColor}" />
+                                    <Setter Property="Foreground" Value="{DynamicResource TextColor}" />
+                                </Style>
+                            </DataGrid.Resources>
+                        </DataGrid>
+                    </Grid>
                 </Grid>
             </Grid>
             

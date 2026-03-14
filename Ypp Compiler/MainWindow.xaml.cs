@@ -16,6 +16,8 @@ namespace Ypp_Compiler {
     public partial class MainWindow : Window {
         public MainWindow() {
             InitializeComponent();
+            this.MaxWidth = SystemParameters.WorkArea.Width;
+            this.MaxHeight = SystemParameters.WorkArea.Height;
         }
     }
 }
