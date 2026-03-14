@@ -4,7 +4,7 @@ namespace Ypp_Compiler
 {
     public static class RegexValues
     {
-        public static string keywords = @"\b(int|text|\?|else|repeat|until)\b";
+        public static string keywords = @"\b(int|text|incase|else|repeat|until)\b";
         public static string identifiers = @"\b[a-zA-Z_][a-zA-Z0-9]*\b";
         public static string numbers = @"\b[0-9]+\b";
         public static string operators = @"==|<>|\+|\-|\*|/";

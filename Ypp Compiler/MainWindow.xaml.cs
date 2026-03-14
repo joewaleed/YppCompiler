@@ -23,7 +23,7 @@ namespace Ypp_Compiler {
             MessageBox.Show("Thank you for trying ypp compiler early access.\nPlease note that this is v0.1 and some functionalities might not work.\nEnjoy!", "Welcome",MessageBoxButton.OK,MessageBoxImage.Information);
             TextEditor.Text = """
                 int x = 10;
-                ?(x>y){
+                incase(x>y){
                      text message = "x is greater than y";
                 } else {
                     text message = "x is not greater than y";
