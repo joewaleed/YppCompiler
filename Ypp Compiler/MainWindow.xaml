@@ -172,6 +172,14 @@
             </Setter>
         </Style>
 
+        <Style TargetType="DataGridColumnHeader">
+            <Setter Property="Background" Value="{DynamicResource DataGridHeaderColor}"/>
+            <Setter Property="Foreground" Value="{DynamicResource TextColor}"/>
+            <Setter Property="Padding" Value="5"/>
+            <Setter Property="BorderThickness" Value="0,0,0,1"/>
+            <Setter Property="BorderBrush" Value="{DynamicResource BorderColor}"/>
+        </Style>
+
     </Window.Resources>
 
     <Grid>
@@ -204,7 +212,7 @@
                             <MenuItem Style="{StaticResource Service_SubMenu_MenuItem}" Header="LightTheme"/>
                         </MenuItem>
                     </MenuItem>
-                    <MenuItem Header="Run" Style="{StaticResource Main_MenuItem}" />
+                    <MenuItem Header="Run" Style="{StaticResource Main_MenuItem}" Click="Run_Click"/>
                     <MenuItem Header="Help" Style="{StaticResource Services_MenuItem_With_Dropdown}">
                         <MenuItem Style="{StaticResource Service_SubMenu_MenuItem}" Header="Documentation"/>
                         <MenuItem Style="{StaticResource Service_SubMenu_MenuItem}" Header="About"/>
@@ -218,23 +226,46 @@
                     <TextBox Padding="10" Style="{StaticResource TextEditor}" SelectionBrush="{DynamicResource TextHighlightColor}"
                          Background="{DynamicResource TextEditorColor}" Foreground="{DynamicResource TextColor}" 
                          FontFamily="Rubik Medium" Grid.Column="0"
-                             TextWrapping="Wrap" AcceptsReturn="True" AcceptsTab="True" />
+                             TextWrapping="Wrap" AcceptsReturn="True" AcceptsTab="True" Name="TextEditor"/>
                     <Grid Grid.Column="1">
                         <Grid.RowDefinitions>
                             <RowDefinition Height="Auto"/>
                             <RowDefinition Height="*"/>
                         </Grid.RowDefinitions>
-                        <MenuItem Header="Lexical Scanner" Style="{StaticResource Main_MenuItem}" Grid.Row="0"/>
-                        <DataGrid Width="300" Margin="10,5,10,25" 
-                          Background="{DynamicResource TextEditorColor}" BorderBrush="{DynamicResource BorderColor}"
-                          Foreground="{DynamicResource TextColor}" Grid.Row="1">
-                            <DataGrid.Resources>
-                                <Style TargetType="{x:Type DataGridColumnHeader}">
-                                    <Setter Property="Background" Value="{DynamicResource DataGridHeaderColor}" />
-                                    <Setter Property="Foreground" Value="{DynamicResource TextColor}" />
+                        <Menu VerticalAlignment="Top" Margin="20,10,0,0" Background="Transparent" BorderThickness="0" Grid.Row="0">
+                            <MenuItem Header="Lexical Scanner" Style="{StaticResource Main_MenuItem}" Grid.Row="0"/>
+                        </Menu>
+                        <DataGrid Grid.Column="1" Grid.Row="1" IsReadOnly="True"
+                              AutoGenerateColumns="False" CanUserAddRows="False"
+                              Background="Transparent" BorderThickness="0" HeadersVisibility="Column"
+                              GridLinesVisibility="None" Margin="10,5,10,25"
+                              HorizontalAlignment="Stretch" x:Name="Scanner_Output">
+                        <DataGrid.Resources>
+
+                                <Style TargetType="DataGridCell">
+                                    <Setter Property="Foreground" Value="{DynamicResource TextColor}"/>
+                                    <Setter Property="Background" Value="Transparent"/>
+                                    <Setter Property="BorderThickness" Value="0"/>
+                                    <Setter Property="FocusVisualStyle" Value="{x:Null}"/>
+                                    <Style.Triggers>
+                                        <Trigger Property="IsSelected" Value="True">
+                                            <Setter Property="Background" Value="{DynamicResource TextEditorColor}"/>
+                                            <Setter Property="Foreground" Value="{DynamicResource TextColor}"/>
+                                        </Trigger>
+                                    </Style.Triggers>
+                                </Style>
+
+                                <Style TargetType="DataGridRow">
+                                    <Setter Property="Background" Value="Transparent"/>
                                 </Style>
                             </DataGrid.Resources>
+
+                            <DataGrid.Columns>
+                                <DataGridTextColumn Header="Token" Binding="{Binding Token}" Width="1*"/>
+                                <DataGridTextColumn Header="Lexeme" Binding="{Binding Lexeme}" Width="1*"/>
+                            </DataGrid.Columns>
                         </DataGrid>
+
                     </Grid>
                 </Grid>
             </Grid>

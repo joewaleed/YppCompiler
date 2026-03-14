@@ -11,7 +11,7 @@
     <SolidColorBrush x:Key="TextEditorBorderColor" Color="#ff4e39"/>
     <SolidColorBrush x:Key="TextEditorSelectionColor" Color="#ffb220"/>
     <SolidColorBrush x:Key="TextHighlightColor" Color="#5eeb01"/>
-    <SolidColorBrush x:Key="DataGridHeaderColor" Color="#2b609c"/>
+    <SolidColorBrush x:Key="DataGridHeaderColor" Color="#043169"/>
     
 
     <Color x:Key="ShadowColor">#000000</Color>
