@@ -22,7 +22,7 @@
 
 ## Overview
 
-**YppCompiler** is a compiler for the Y++ programming language, implemented entirely in C#. The project demonstrates core compiler construction concepts — including lexical analysis, parsing, semantic analysis, and code generation — within a clean, maintainable .NET solution.
+**YppCompiler** is a compiler for the Y++ programming language, implemented entirely in C#. The project demonstrates core compiler construction concepts including (lexical analysis, parsing, semantic analysis, and code generation) within a clean, maintainable .NET solution.
 
 Whether you're studying compiler design or looking to extend the Y++ language, this project serves as a solid foundation.
 
@@ -129,7 +129,3 @@ Please ensure your code follows existing conventions and includes relevant tests
 ## License
 
 This project is open source. See the repository for licensing details.
-
----
-
-*Built with C# and .NET — by [joewaleed](https://github.com/joewaleed)*
