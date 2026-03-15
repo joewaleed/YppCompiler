@@ -1,15 +1,6 @@
-﻿using System.Text;
+﻿using System.Text.RegularExpressions;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
-using System.Text.RegularExpressions;
-using System.Data;
 
 namespace Ypp_Compiler {
     /// <summary>
@@ -73,8 +64,39 @@ namespace Ypp_Compiler {
                     UseShellExecute = true
                 });
             } catch (Exception ex) {
-                MessageBox.Show($"Unable to open documentation: {ex.Message}", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                MessageBox.Show($"Unable to open documentation", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
             }
         }
+
+        #region Edit Menu
+        private void Copy_Click(object sender, RoutedEventArgs e) {
+            Clipboard.SetText(TextEditor.SelectedText);
+        }
+
+        private void Cut_Click(object sender, RoutedEventArgs e) {
+            Clipboard.SetText(TextEditor.SelectedText);
+            TextEditor.SelectedText = "";
+        }
+
+        private void Paste_Click(object sender, RoutedEventArgs e) {
+            string textToPaste = Clipboard.GetText();
+            int caretIndex = TextEditor.CaretIndex;
+            if (Clipboard.ContainsText()) {
+
+                string newText = TextEditor.Text.Insert(caretIndex, textToPaste);
+                TextEditor.Text = newText;
+
+                TextEditor.CaretIndex = caretIndex + textToPaste.Length;
+            }
+        }
+
+        private void Undo_Click(object sender, RoutedEventArgs e) {
+            if(TextEditor.CanUndo) TextEditor.Undo();
+        }
+
+        private void Redo_Click(object sender, RoutedEventArgs e) {
+            if(TextEditor.CanRedo) TextEditor.Redo();
+        }
+        #endregion
     }
 }

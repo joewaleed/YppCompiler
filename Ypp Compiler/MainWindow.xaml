@@ -240,14 +240,14 @@
                             <MenuItem Style="{StaticResource Service_SubMenu_MenuItem}" Header="New"/>
                             <MenuItem Style="{StaticResource Service_SubMenu_MenuItem}" Header="Open"/>
                             <MenuItem Style="{StaticResource Service_SubMenu_MenuItem}" Header="Save"/>
-                            <MenuItem Style="{StaticResource Service_SubMenu_MenuItem}"  Header="Exit"/>
+                            <MenuItem Style="{StaticResource Service_SubMenu_MenuItem}"  Header="Exit" Click="ExitButton_Click"/>
                         </MenuItem>
                         <MenuItem Header="Edit" Style="{StaticResource Services_MenuItem_With_Dropdown}">
-                            <MenuItem Style="{StaticResource Service_SubMenu_MenuItem}" Header="Undo"/>
-                            <MenuItem Style="{StaticResource Service_SubMenu_MenuItem}" Header="Redo"/>
-                            <MenuItem Style="{StaticResource Service_SubMenu_MenuItem}" Header="Cut"/>
-                            <MenuItem Style="{StaticResource Service_SubMenu_MenuItem}" Header="Copy"/>
-                            <MenuItem Style="{StaticResource Service_SubMenu_MenuItem}" Header="Paste"/>
+                            <MenuItem Style="{StaticResource Service_SubMenu_MenuItem}" Header="Undo" Click="Undo_Click"/>
+                            <MenuItem Style="{StaticResource Service_SubMenu_MenuItem}" Header="Redo" Click="Redo_Click"/>
+                            <MenuItem Style="{StaticResource Service_SubMenu_MenuItem}" Header="Cut" Click="Cut_Click"/>
+                            <MenuItem Style="{StaticResource Service_SubMenu_MenuItem}" Header="Copy" Click="Copy_Click"/>
+                            <MenuItem Style="{StaticResource Service_SubMenu_MenuItem}" Header="Paste" Click="Paste_Click"/>
                         </MenuItem>
                         <MenuItem Header="View" Style="{StaticResource Services_MenuItem_With_Dropdown}">
                             <MenuItem Header="Theme" Style="{StaticResource Main_MenuItem}">
