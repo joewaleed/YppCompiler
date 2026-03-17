@@ -98,5 +98,26 @@ namespace Ypp_Compiler {
             if(TextEditor.CanRedo) TextEditor.Redo();
         }
         #endregion
+
+        #region View Menu
+        private void SetTheme(string themeFile) {
+            var uri = new Uri(themeFile, UriKind.Relative);
+
+            ResourceDictionary newTheme = new ResourceDictionary { Source = uri };
+
+            Application.Current.Resources.MergedDictionaries.Clear();
+            Application.Current.Resources.MergedDictionaries.Add(newTheme);
+
+            Properties.Settings.Default.CurrentTheme = themeFile;
+            Properties.Settings.Default.Save();
+        }
+
+        private void SetDark_Click(object sender, RoutedEventArgs e) {
+            SetTheme("/Assets/Theme/DarkMode.xaml");
+        }
+        private void SetLight_Click(object sender, RoutedEventArgs e) {
+            SetTheme("/Assets/Theme/LightMode.xaml");
+        }
+        #endregion
     }
 }

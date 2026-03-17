@@ -113,20 +113,24 @@
             <Setter Property="Template">
                 <Setter.Value>
                     <ControlTemplate TargetType="{x:Type MenuItem}">
-                        <Border x:Name="border" BorderThickness="0" Padding="0,3,5,3">
-                            <Grid>
-                                <ContentPresenter ContentSource="Header" 
-                                  TextBlock.Foreground="{DynamicResource TextColor}" 
-                                  TextBlock.FontFamily="Rubik Medium" TextBlock.FontSize="15"
-                                  HorizontalAlignment="Left" VerticalAlignment="Center"
-                                  Margin="3,0,3,0"/>
-                                <Grid x:Name="Highlighter" Height="35" Width="2" Background="{DynamicResource TextColor}" 
-                                  HorizontalAlignment="Left"
-                                  VerticalAlignment="Center"
-                                  Visibility="Collapsed">
-                                </Grid>
-                            </Grid>
 
+                        <Border x:Name="border" 
+                        BorderThickness="0" 
+                        Padding="0,3,5,3" 
+                        Height="40">
+                            <Grid>
+                                <ContentPresenter ContentSource="Header"
+                            TextBlock.Foreground="{DynamicResource TextColor}" 
+                            TextBlock.FontFamily="Rubik Medium" TextBlock.FontSize="15"
+                            HorizontalAlignment="Left" VerticalAlignment="Center"
+                            Margin="3,0,3,0"/>
+                                <Grid x:Name="Highlighter" 
+                                  Height="35" 
+                                  Width="2" 
+                                  Background="{DynamicResource TextColor}" 
+                                  HorizontalAlignment="Left"
+                                  Visibility="Collapsed"/>
+                            </Grid>
                         </Border>
                         <ControlTemplate.Triggers>
                             <Trigger Property="IsHighlighted" Value="True">
@@ -218,6 +222,91 @@
             </Setter>
         </Style>
 
+        <Style x:Key="Services_SubMenu_With_Dropdown" TargetType="MenuItem">
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="{x:Type MenuItem}">
+                        <Border x:Name="border"
+                        Background="Transparent"
+                        BorderThickness="0"
+                        Height="30"
+                        Width="auto"
+                        Padding="0,0,5,0">
+                            <Grid>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="*" />
+                                    <ColumnDefinition Width="Auto" />
+                                </Grid.ColumnDefinitions>
+
+                                <Grid x:Name="Highlighter" Height="35" Width="2" Background="{DynamicResource TextColor}" 
+                                  HorizontalAlignment="Left"
+                                  VerticalAlignment="Center"
+                                  Visibility="Collapsed" Grid.Column="0"/>
+
+                                <ContentPresenter Grid.Column="0"
+                                  ContentSource="Header"
+                                  TextBlock.Foreground="{DynamicResource TextColor}"
+                                  TextBlock.FontFamily="Rubik Medium"
+                                  TextBlock.FontSize="15"
+                                  HorizontalAlignment="Left"
+                                  VerticalAlignment="Center"
+                                  Margin="10,0,20,0"/>
+                                    <Path x:Name="Arrow"
+                                  Grid.Column="1"
+                                  Data="M 0,0 L 4,4 L 0,8" 
+                                  Stroke="{DynamicResource TextColor}"
+                                  StrokeThickness="2"
+                                  VerticalAlignment="Center"
+                                  Margin="0,0,10,0"/>
+
+                                    <Popup x:Name="PART_Popup"
+                               AllowsTransparency="True"
+                               IsOpen="{Binding IsSubmenuOpen, RelativeSource={RelativeSource TemplatedParent}}"
+                               Placement="Right"
+                               PopupAnimation="{DynamicResource {x:Static SystemParameters.MenuPopupAnimationKey}}">
+
+                                        <Border x:Name="SubMenuBorder"
+                                    Background="{DynamicResource DropDownColor}"
+                                    BorderBrush="{DynamicResource BorderColor}">
+
+                                            <ScrollViewer x:Name="SubMenuScrollViewer"
+                                              Style="{DynamicResource {ComponentResourceKey ResourceId=MenuScrollViewer,TypeInTargetAssembly={x:Type FrameworkElement}}}">
+
+                                                <Grid RenderOptions.ClearTypeHint="Enabled">
+
+                                                    <Canvas HorizontalAlignment="Left"
+                                                VerticalAlignment="Top" />
+
+                                                    <ItemsPresenter x:Name="ItemsPresenter" />
+
+                                                </Grid>
+                                            </ScrollViewer>
+                                        </Border>
+                                    </Popup>
+                                </Grid>
+                        </Border>
+
+                        <ControlTemplate.Triggers>
+
+                            <Trigger Property="IsSuspendingPopupAnimation"
+                             Value="True">
+                                <Setter Property="PopupAnimation"
+                                TargetName="PART_Popup"
+                                Value="None" />
+                            </Trigger>
+                            <Trigger Property="IsHighlighted"
+                             Value="True">
+                                <Setter Property="Background" TargetName="border" Value="{DynamicResource HighlightColor}" />
+                                <Setter Property="BorderBrush" TargetName="border" Value="{DynamicResource HighlightColor}" />
+                                <Setter TargetName="Highlighter" Property="Visibility" Value="Visible"/>
+                            </Trigger>
+
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+
     </Window.Resources>
 
     <Grid>
@@ -250,9 +339,9 @@
                             <MenuItem Style="{StaticResource Service_SubMenu_MenuItem}" Header="Paste" Click="Paste_Click"/>
                         </MenuItem>
                         <MenuItem Header="View" Style="{StaticResource Services_MenuItem_With_Dropdown}">
-                            <MenuItem Header="Theme" Style="{StaticResource Main_MenuItem}">
-                                <MenuItem Style="{StaticResource Service_SubMenu_MenuItem}" Header="DarkTheme"/>
-                                <MenuItem Style="{StaticResource Service_SubMenu_MenuItem}" Header="LightTheme"/>
+                            <MenuItem Header="Theme" Style="{StaticResource Services_SubMenu_With_Dropdown}">
+                                <MenuItem Style="{StaticResource Service_SubMenu_MenuItem}" Header="DarkTheme" Click="SetDark_Click"/>
+                                <MenuItem Style="{StaticResource Service_SubMenu_MenuItem}" Header="LightTheme" Click="SetLight_Click"/>
                             </MenuItem>
                         </MenuItem>
                         <MenuItem Header="Run" Style="{StaticResource Main_MenuItem}" Click="Run_Click"/>

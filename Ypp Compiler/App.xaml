@@ -6,7 +6,7 @@
     <Application.Resources>
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
-                <ResourceDictionary x:Name="Theme" Source="DarkMode.xaml"/>
+                <ResourceDictionary x:Name="Theme" Source="/Assets/Theme/DarkMode.xaml"/>
             </ResourceDictionary.MergedDictionaries>
         </ResourceDictionary>
     </Application.Resources>
