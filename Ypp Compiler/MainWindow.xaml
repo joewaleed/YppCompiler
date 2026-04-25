@@ -428,8 +428,8 @@
                             </DataGrid.Resources>
 
                             <DataGrid.Columns>
-                                <DataGridTextColumn Header="Token" Binding="{Binding Token}" Width="1*"/>
-                                <DataGridTextColumn Header="Lexeme" Binding="{Binding Lexeme}" Width="1*"/>
+                                <DataGridTextColumn Header="Token" Binding="{Binding Type}" Width="1*"/>
+                                <DataGridTextColumn Header="Lexeme" Binding="{Binding Value}" Width="1*"/>
                             </DataGrid.Columns>
                         </DataGrid>
 
