@@ -1,4 +1,6 @@
-﻿namespace Ypp_Compiler {
+﻿using System.Windows;
+
+namespace Ypp_Compiler {
     internal class yppParser {
         private List<Token> tokens;
         private int index = 0;
@@ -23,30 +25,27 @@
         }
 
         private void ParseStatements() {
-            ParseStatement();
-            if (index < tokens.Count && currentToken.Value == ";") {
-                Match(";");
-                if (index < tokens.Count && currentToken.Value != "}" && currentToken.Value != "until") ParseStatements();
-            }
+            bool isBlock = ParseStatement();
+            if (!isBlock) Match(";");
+            if (index < tokens.Count && currentToken.Value != "}") ParseStatements();
         }
 
 
         //Throws YPP002 if the token does not match any valid statement type
-        private void ParseStatement() {
+        private bool ParseStatement() {
+            if (index >= tokens.Count) return false;
 
-            if (index >= tokens.Count) return;
-
-            if (currentToken.Value == "int" || currentToken.Value == "text") ParseDeclaration();
-
-            else if (currentToken.Type == "Identifier") ParseAssignment();
-
-            else if (currentToken.Value == "incase") ParseCheck();
-
-            else if (currentToken.Value == "repeat") ParseRepeat();
-
-            else if (currentToken.Value == "{") ParseBlock();
-
-            else throw new Exception($"Syntax Error YPP002 : Unexpected token '{currentToken.Value}'");
+            if (currentToken.Value == "int" || currentToken.Value == "text") {
+                ParseDeclaration(); return false;
+            } else if (currentToken.Type == "Identifier") {
+                ParseAssignment(); return false;
+            } else if (currentToken.Value == "incase") {
+                ParseCheck(); return true;
+            } else if (currentToken.Value == "repeat") {
+                ParseRepeat(); return true;
+            } else if (currentToken.Value == "{") {
+                ParseBlock(); return true;
+            } else throw new Exception($"Syntax Error YPP002 : Unexpected token '{currentToken.Value}'");
         }
 
         private void ParseDeclaration() {
@@ -87,7 +86,6 @@
         private void ParseBlock() {
             if (currentToken.Value == "{") {
                 Match("{");
-
                 ParseStatements();
                 Match("}");
             }
@@ -110,7 +108,6 @@
             }
         }
 
-        //Throws YPP005 if the factor is not an identifier, number, or parenthesized expression
         private void ParseTerm() {
             ParseFactor();
             while (index < tokens.Count && (currentToken.Value == "*" || currentToken.Value == "/")) {
@@ -118,11 +115,16 @@
                 ParseFactor();
             }
         }
+
+        //Throws YPP005 if the factor is not an identifier, number, or parenthesized expression
         private void ParseFactor() { 
 
         if (currentToken.Type == "Identifier") Match("Identifier");
-        else if (currentToken.Type == "Number") Match("Number");
-        else if (currentToken.Value == "(") { Match("("); ParseExpression();
+        else if (currentToken.Type == "String") Match("String");
+            else if (currentToken.Type == "Number") Match("Number");
+        else if (currentToken.Value == "(") { 
+                Match("("); 
+                ParseExpression();
                 Match(")");
             }
         else throw new Exception($"Syntax Error YPP005 :Expected Identifier or Number but found {currentToken.Value}");

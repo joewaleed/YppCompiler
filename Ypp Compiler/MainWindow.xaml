@@ -347,6 +347,7 @@
                         <MenuItem Header="Run" Style="{StaticResource Main_MenuItem}" Click="Run_Click"/>
                         <MenuItem Header="Help" Style="{StaticResource Services_MenuItem_With_Dropdown}">
                             <MenuItem Style="{StaticResource Service_SubMenu_MenuItem}" Header="Documentation" Click="Documentation_Click"/>
+                            <MenuItem Style="{StaticResource Service_SubMenu_MenuItem}" Header="Sample Code" Click="SampleCode_Click"/>
                             <MenuItem Style="{StaticResource Service_SubMenu_MenuItem}" Header="About"/>
                         </MenuItem>
                     </Menu>

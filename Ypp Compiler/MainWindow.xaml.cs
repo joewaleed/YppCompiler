@@ -12,20 +12,7 @@ namespace Ypp_Compiler {
             this.MaxWidth = SystemParameters.WorkArea.Width;
             this.MaxHeight = SystemParameters.WorkArea.Height;
             MessageBox.Show("Thank you for trying ypp compiler early access.\nPlease note that this is v0.5 and some functionalities might not work.\nEnjoy!", "Welcome",MessageBoxButton.OK,MessageBoxImage.Information);
-            TextEditor.Text = """
-                int x = 10;
-                int y = 15;
-                incase(x>y){
-                     x =5;
-                } else {
-                    x = 15;
-                }
-
-                repeat {
-                    x = x+1;
-                } until (x == 20);
-
-                """;
+            Generate_Sample();
         }
 
         private void Run_Click(object sender, RoutedEventArgs e) {
@@ -57,6 +44,7 @@ namespace Ypp_Compiler {
             Application.Current.Shutdown();
         }
 
+        #region Help Menu
         private void Documentation_Click(object sender, RoutedEventArgs e) {
             string url = "https://github.com/joewaleed/YppCompiler";
             try {
@@ -68,6 +56,9 @@ namespace Ypp_Compiler {
                 MessageBox.Show($"Unable to open documentation", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
             }
         }
+        private void SampleCode_Click(object sender, RoutedEventArgs e) => Generate_Sample();
+
+        #endregion
 
         #region Edit Menu
         private void Copy_Click(object sender, RoutedEventArgs e) {
@@ -120,5 +111,24 @@ namespace Ypp_Compiler {
             SetTheme("/Assets/Theme/LightMode.xaml");
         }
         #endregion
+
+
+        internal void Generate_Sample() {
+            TextEditor.Text = """
+                int x = 10;
+                int y = 15;
+                incase(x>y){
+                    text res = "x is greater than y";
+                } else incase(x < y){
+                    text res = "x is less than y";
+                } else {
+                    text res = "x is equal to y";
+                }
+                repeat {
+                    x = x+1;
+                } until (x == 20)
+
+                """;
+        }
     }
 }

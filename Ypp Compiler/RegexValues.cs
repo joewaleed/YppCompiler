@@ -4,8 +4,9 @@ namespace Ypp_Compiler
 {
     public static class RegexValues
     {
-        public static string keywords = @"\b(int|text|incase|else|repeat|until)\b";
         public static string identifiers = @"\b[a-zA-Z_][a-zA-Z0-9]*\b";
+        public static string strings = @"""[^""]*""";
+        public static string keywords = @"\b(int|text|incase|else|repeat|until)\b";
         public static string numbers = @"\b[0-9]+\b";
         public static string operators = @"\+|\-|\*|/";
         public static string comparison = @"==|!=|>=|<=|>|<";
@@ -13,7 +14,7 @@ namespace Ypp_Compiler
         public static string symbols = @"[{}()]";
         public static string semicolumn = ";";
 
-        public static string MasterPattern = $"{keywords}|{identifiers}|{numbers}|{operators}|{comparison}|{assignment}|{symbols}|{semicolumn}";
+        public static string MasterPattern = $"{identifiers}|{strings}|{keywords}|{numbers}|{operators}|{comparison}|{assignment}|{symbols}|{semicolumn}";
 
         public static MatchCollection GetMatch(this string text) {
             return Regex.Matches(text, MasterPattern);
@@ -21,6 +22,7 @@ namespace Ypp_Compiler
 
         public static string IsMatch(this string text) {
             return Regex.IsMatch(text, keywords) ? "Keyword" : 
+                   Regex.IsMatch(text, strings) ? "String" :
                    Regex.IsMatch(text, identifiers) ? "Identifier" :
                    Regex.IsMatch(text, numbers) ? "Number" :
                    Regex.IsMatch(text, operators) ? "Operator" :
