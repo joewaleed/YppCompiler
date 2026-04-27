@@ -1,6 +1,5 @@
 ﻿using System.Text.RegularExpressions;
 using System.Windows;
-using System.Windows.Controls;
 
 namespace Ypp_Compiler {
     /// <summary>
@@ -11,7 +10,7 @@ namespace Ypp_Compiler {
             InitializeComponent();
             this.MaxWidth = SystemParameters.WorkArea.Width;
             this.MaxHeight = SystemParameters.WorkArea.Height;
-            MessageBox.Show("Thank you for trying ypp compiler early access.\nPlease note that this is v0.5 and some functionalities might not work.\nEnjoy!", "Welcome",MessageBoxButton.OK,MessageBoxImage.Information);
+            MessageBox.Show("Thank you for trying ypp compiler early access.\nPlease note that this is v0.5 and some functionalities might not work.\nEnjoy!", "Welcome", MessageBoxButton.OK, MessageBoxImage.Information);
             Generate_Sample();
         }
 
@@ -20,11 +19,11 @@ namespace Ypp_Compiler {
             List<Token> tokenList = new List<Token>();
 
             foreach (Match match in matches)
-                        tokenList.Add(new Token{ 
-                            Value = match.Value,
-                            Type = match.Value.IsMatch() //This is another extension method defined in RegexValues.cs
-                        });
-            
+                tokenList.Add(new Token {
+                    Value = match.Value,
+                    Type = match.Value.IsMatch() //This is another extension method defined in RegexValues.cs
+                });
+
 
             Scanner_Output.ItemsSource = tokenList;
 
@@ -35,7 +34,7 @@ namespace Ypp_Compiler {
                 parser.ParseStart();
 
                 MessageBox.Show("Parsing completed successfully!", "Success", MessageBoxButton.OK, MessageBoxImage.Information);
-            } catch(Exception ex) {
+            } catch (Exception ex) {
                 MessageBox.Show($"Parsing failed: {ex.Message}", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
             }
         }
@@ -83,11 +82,11 @@ namespace Ypp_Compiler {
         }
 
         private void Undo_Click(object sender, RoutedEventArgs e) {
-            if(TextEditor.CanUndo) TextEditor.Undo();
+            if (TextEditor.CanUndo) TextEditor.Undo();
         }
 
         private void Redo_Click(object sender, RoutedEventArgs e) {
-            if(TextEditor.CanRedo) TextEditor.Redo();
+            if (TextEditor.CanRedo) TextEditor.Redo();
         }
         #endregion
 
